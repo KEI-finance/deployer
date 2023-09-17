@@ -1,0 +1,12 @@
+{
+  "name": "@kei.fi/deployer",
+  "version": "1.0.0-beta.0",
+  "description": "Custom Deployer for Static Deployments",
+  "main": "index.js",
+  "repository": "https://github.com/Kei-Finance/deployer.git",
+  "author": "Kevin Upton <kevin@kei.fi>",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  }
+}
