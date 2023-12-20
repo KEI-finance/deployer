@@ -11,16 +11,13 @@ library DeployerLibrary {
 
     function deployAddress(bytes memory bytecode, uint256 salt) public view returns (address addr) {
         bytes32 hash = keccak256(
-            abi.encodePacked(bytes1(0xff), DEPLOYER_ADDRESS, salt, keccak256(bytecode))
+            abi.encodePacked(bytes1(0xff), CREATE2_DEPLOYER_ADDRESS, salt, keccak256(bytecode))
         );
         return address(uint160(uint256(hash)));
     }
 
-    function cloneAddress(address target, uint256 salt) public view returns (address addr) {
-        return Clones.predictDeterministicAddress(target, bytes32(salt), DEPLOYER_ADDRESS);
-    }
+    function deploy(bytes memory bytecode, uint256 salt) public returns (address addr) {
 
-    function deploy(bytes memory bytecode, uint256 salt, FunctionCall[] calldata calls) public returns (address addr) {
         assembly {
             addr := create2(0, add(bytecode, 0x20), mload(bytecode), salt)
             if iszero(extcodesize(addr)) {

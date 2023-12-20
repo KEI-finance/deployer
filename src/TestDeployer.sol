@@ -2,10 +2,11 @@
 
 pragma solidity ^0.8.9;
 
+import "create2deployer/contracts/Create2Deployer.sol";
+
 import 'forge-std/Test.sol';
 
 import './constants.sol';
-import './Deployer.sol';
 import './Placeholder.sol';
 
 // Create2Deployer foundry contract
@@ -18,9 +19,9 @@ contract TestDeployer is Test {
 
     constructor(uint256 _defaultSalt) {
         // setup the create2 deployer at a specific address
-        Deployer deployer = new Deployer();
+        Deployer deployer = new Create2Deployer();
         bytes memory code = address(deployer).code;
-        vm.etch(CREATE2_DEPLOYER_ADDRESS, code);
+        vm.etch(address(CREATE2_FACTORY), code);
         create2Deployer = Create2Deployer(CREATE2_DEPLOYER_ADDRESS);
 
         // deploy the placeholder at a specific address
